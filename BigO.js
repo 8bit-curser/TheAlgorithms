@@ -132,3 +132,25 @@ function double(arr) {
 // search algorithms have log time complex
 // efficient sorting algorithms involve logarithms
 // recursion sometimes involve both space log complexity
+
+
+// ||||| Objects ||||||
+//
+// access, insertion and removal on objects its O(1) while search is O(n)
+// if ordering is not needed then its a great option
+// searching refers to determin if a piece of data is on the value side of the
+// key pair relation eg. numbers: [1, 2, 3] searching that 3 is in numbers
+
+
+
+// |||| Arrays |||||
+//
+// They are ordered, if you dont need order maybe there are other structures
+// such as linked lists that can provide more performance than arrays.
+// insertion and removal is costy, accessing is O(1) cause you do it by idx,
+// searching O(n). Pushing into an array is O(1), you add it to the back so its easy
+// but adding at the start of the array its costy as we have to update all idxs for
+// all the elements so inserting at the head of the array is O(n) the same happens
+// if we remove for the top of the array. 
+// the methods in js for arrays if its not push and pop O(1) and sort which is O(n*log n)
+// then all of the others depend in the size which means O(n) [slice, splice, shift, unshift, concat, foreach, map, filter ..]
