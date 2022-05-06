@@ -27,29 +27,3 @@
 // analyze it, find what you dont like and improve it. Ask what can be done better, more readable
 // nicer, more performant, etc. 
 // 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
