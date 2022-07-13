@@ -95,6 +95,166 @@ function an(string1, string2) {
 
 }
 
+// ---- Multiple Pointer Pattern -----
+// 
+// Useful when there is a need to find a sibling value in a string or sorted array
+// for example it could be used in an array of numbers and we need to find a pair that
+// its sum is 0.
+// 
+// Naive solution:
+
+// Time complex = O(n**2) [Nested loops]
+// Space complex = O(1)
+function sumZero(arr) {
+    for (let i=0; i< arr.length; i++) {
+        for (let j=i+1; j< arr.length; j++){
+            if (arr[i] + arr[j] === 0) {
+                return [arr[i], arr[j]];
+            }
+        }
+    }
+}
+
+// a better approach
+// Time complexity O(n) - []
+// Space complexity O(1)
+function sumZero(arr) {
+    let left = 0; // one starts at the beggining 
+    let right = arr.length - 1; // one starts from the end of the array
+    while (left < right ) {  // this will run until we get to the middle of the array
+        let sum = arr[left] + arr[right];  // we sum the two values
+        if (sum == 0) { // if they are 0 we have a pair
+            return [arr[left], arr[right]];
+        } else if (sum > 0) { // if the sum is positive it means (as the array is sorted) the left number is smaller than the right (-2 + 3)
+            right--; // so we push the pointer on the right to the left
+        } else { // if the sum is negative it means the the number on the right is smaller than on the left (-4 + 2)
+            left++; // so push the left pointer to the right
+        }
+    }
+}
+// countUniques([]) 0
+// countUniques([-2,-1,0,1,1]) 4
+// countUniques([1,1,1,1,1,1,2]) 2
+// countUniques([1,2,3,4,5,6,6,6,6,7]) 7
+// Timecomplexity O(n) [ we need to iterate once over the array]
+// Space complex O(1)
+// workes only on sorted arrays
+function countUniques(arr) {
+    if (arr.length === 0) return 0; // if empty arr return 0
+    let pointer = 0; // first pointer starts at base
+    for (let i = 1; i < arr.length; i++) { // i being the second one, starts at base +1
+        if (arr[pointer] !== arr[i]) { // check equality
+            pointer++; // if not equal increase the base pointer
+            arr[pointer] = arr[i]; // put the different value into the new base pointer slot  
+        } 
+    }
+    return pointer + 1; // pointer returns the last idx modified we need to add 1 to be consistent
+}
+// pointer
+// 1, 1, 1, 2   => first iter pointer = 0; i=1
+//    j 
+//
+// pointer
+// 1, 1, 1, 2 => second iter pointer = 0 ; i=2
+//       j 
+// pointer
+// 1, 1, 1, 2 => third iter pointer =0; i=3
+//          j
+// 
+// We got a match then 
+//    pointer
+// 1, 2, 1, 2 => final result pointer =1; i=3 return pointer+1 = 2 (2 unique numbers)
+//          j
+// 
+// 
+// ---- Sliding Window Pattern -----
+// 
+// Creates a subset (window) which can increaese or decrease
+// depending on a given criteria. Good for keeping track of a subset.
+//
+// - exercise. Given an unordered array and the size of a window
+// find the window with the biggest sum
+//
+// maxSubarraySum([1,2,5,2,8,1,5], 2) 10
+// maxSubarraySum([1,2,5,2,8,1,5], 4) 17
+// maxSubarraySum([4,2,1,6], 1) 6
+// maxSubarraySum([4,2,1,6,2], 4) 13 
+// maxSubarraySum([], 4) nul
+// 
+// for the first example.
+// [1,2,5,2,8,1,5]
+// iter 0 -> first subset 1,2 = 3
+// iter 1 -> second subset 2,5 = 7
+// iter 2 -> third subset  5,2 = 7
+// iter 3 -> fourth subset 2,8 = 10
+// iter 4 -> fifth subset  8,1 = 9
+// iter 5 -> sixth subset 1,5 = 6
+// 
+// we itered length - 1
+// 
+// -- Naive solution --
+// time complexity O(N**2) [nested loops]
+function maxSubarraySum(arr, num) {
+    if (num > arr.length) {
+        return null;
+    }
+    // for negative values on the array
+    var max = -Infinity;
+    for (let i=0; i < arr.length - num + 1; i++) {
+        temp = 0;
+        for (let j = 0; j < num; j++) {
+            temp += arr[i + j];
+        }
+        if (temp > max) { 
+            max = temp
+        }
+    }
+    return max;
+}
+// 
+// -- Improved solution
+// Time Complexity O(n)
+function maxSubarraySum(arr, num) {
+    let maxSum = 0;
+    let tempSum = 0;
+    // if arr is empty
+    if (arr.length < num) return null;
+    // initialize maxSum to the first chunk possible
+    for (let i=0; i < num; i++){
+        maxSum += arr[i];
+    }
+    // initialize tempSum
+    tempSum = maxSum;
+    // iterates from where the last iteration left
+    for (let i = num; i < arr.length; i++) {
+        // substracts the first number and adds the new one
+        // if we have [1,2,3,4,5] and the window is of 2
+        // first loop give us temp of 3 (1 + 2)
+        // for the next iter we dont need to add 2+3
+        // we just can do 3(temp sum) - 1 (arr[0]) + 3(arr[2]) = 5 
+        // arr[0] the 0 is determined by doing 2 (i) - 2 (num)
+        // for arr[1] the 1 is determined by doing 3(i) - 2 .. etc
+        // and we can repeat this,  all the time iterating only once
+        tempSum = tempSum - arr[i-num] + arr[i];
+        // updates maxSum
+        maxSum = Math.max(maxSum, tempSum);
+    }
+    return maxSum;
+}
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
 // 
 // 
 // 
