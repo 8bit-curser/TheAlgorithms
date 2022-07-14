@@ -243,15 +243,52 @@ function maxSubarraySum(arr, num) {
 }
 // 
 // 
+// ----- Divide and Conquer Pattern -------
+// 
+// Divide data in smaller chunks and repeat the process
+// with a subset of the data. Can decrease time complexity. 
 // 
 // 
+// --- example
+// given a sorted array of ints, write a function that takes a number
+// and returns the idx where the value passed to the function is located    
+// if not return -1
 // 
+// search([1,2,3,4,5,6], 4) 3
+// search([1,2,3,4,5,6], 6) 5
+// search([1,2,3,4,5,6], 11) -1
 // 
+// ---- naive solution [Linear Search]
+// Time Complex O(n) 
+function search(arr, val) {
+    for (let i=0; i<arr.length; i++) {
+        if (arr[i] === val) {
+            return i;
+        }
+    }
+    return -1;
+}
 // 
-// 
-// 
-// 
-// 
+// --- refactor [Binary Search]
+// Time Complex O(log(n))
+function search(arr, val) { // we basically reduce the amount of numbers we need to look for
+    let min = 0; // start idx
+    let max = arr.length - 1; // last idx
+    while (min <= max) {
+        let middle = Math.floor((min+max) / 2); // get mid idx
+        // let currentElement = arr[middle];
+        // as arr is supposed to be sorted we can use the
+        // following logic
+        if (arr[middle] < val) { // if the value in the middle is smaller than the value we are looking
+            min = middle + 1;  // we discard that half and move the min to the middle idx + 1
+        } else if (arr[middle] >  val) { // if the value in the middle is larger than the value we are looking
+            max = middle - 1; // we discard the upper half moving the max to the middle - 1
+        } else {
+            return middle;
+        }
+    }
+    return -1;
+}
 // 
 // 
 // 
