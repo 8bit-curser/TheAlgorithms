@@ -292,9 +292,43 @@ function search(arr, val) { // we basically reduce the amount of numbers we need
 // 
 // 
 // 
+//
+// --- Excersize two different ways of doing it
+// Non sliding
+function minSubArrayLen(arr, sz){
+    // add whatever parameters you deem necessary - good luck!
+    arr.sort((a,b) => a-b).reverse();
+    console.log(arr);
+    let tempSum = 0;
+    for (let i=0; i<arr.length; i++) {
+        tempSum += arr[i];
+        if (tempSum >= sz) return i+1;
+        
+    }
+    return 0;
+ }
 // 
-// 
-// 
-// 
-// 
-// 
+// Sliding
+function minSubArrayLen(arr, num, size=1) {
+    let tempSum = 0;
+    // iterates from where the last iteration left
+    if (size > arr.length) return 0;
+
+    for (let i=0; i < size; i++){
+        tempSum += arr[i];
+    }
+    for (let i = size; i < arr.length; i++) {
+        // substracts the first number and adds the new one
+        // if we have [1,2,3,4,5] and the window is of 2
+        // first loop give us temp of 3 (1 + 2)
+        // for the next iter we dont need to add 2+3
+        // we just can do 3(temp sum) - 1 (arr[0]) + 3(arr[2]) = 5 
+        // arr[0] the 0 is determined by doing 2 (i) - 2 (num)
+        // for arr[1] the 1 is determined by doing 3(i) - 2 .. etc
+        // and we can repeat this,  all the time iterating only once
+        tempSum = tempSum - arr[i-size] + arr[i];
+        if (tempSum >= num) return size;
+    }
+    size +=  1;
+    return minSubArrayLen(arr, num, size);
+}
