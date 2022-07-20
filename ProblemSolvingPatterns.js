@@ -332,3 +332,23 @@ function minSubArrayLen(arr, num, size=1) {
     size +=  1;
     return minSubArrayLen(arr, num, size);
 }
+//
+//
+//
+//
+//
+function findLongestSubstring(str, sz=str.length){
+    // add whatever parameters you deem necessary - good luck!
+    if (str.length === 0 ) return 0;
+    for(let i=0; str.length >= (sz+i); i++) {
+        let slice = str.slice(i, sz + i);
+        let strSet = new Set(slice)
+        console.log(slice)
+        console.log(Array.from(strSet))
+        console.log(sz)
+        console.log('=================')
+        if (Array.from(strSet).length === sz) return sz;
+    }
+    return findLongestSubstring(str, sz=sz-1);
+  }
+  
