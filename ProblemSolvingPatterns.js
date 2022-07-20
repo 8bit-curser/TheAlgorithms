@@ -343,10 +343,6 @@ function findLongestSubstring(str, sz=str.length){
     for(let i=0; str.length >= (sz+i); i++) {
         let slice = str.slice(i, sz + i);
         let strSet = new Set(slice)
-        console.log(slice)
-        console.log(Array.from(strSet))
-        console.log(sz)
-        console.log('=================')
         if (Array.from(strSet).length === sz) return sz;
     }
     return findLongestSubstring(str, sz=sz-1);
